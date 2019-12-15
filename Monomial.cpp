@@ -67,15 +67,10 @@ Monomial Monomial::operator=(const Monomial &monomial)
 	this->coefficient = monomial.coefficient;
 	return *this;
 }
-Monomial Monomial::operator+(const Monomial &monomial1)const
+Monomial Monomial::operator+(const Monomial &monomial)const
 {
-	Monomial monomial2;
-	monomial2.coefficient = 0;	
-	if (degCheck(monomial1)) {
-		monomial2 = *this;
-		monomial2 += monomial1;
-		return monomial2;
-	}
+	if (degCheck(monomial))
+		return Monomial(this->coefficient + monomial.coefficient, this->degree);
 	return *this;
 }
 Monomial Monomial::operator-(const Monomial &monomial1)const
@@ -90,6 +85,7 @@ Monomial Monomial::operator-(const Monomial &monomial1)const
 }
 Monomial Monomial::operator*(const Monomial &monomial1)const
 {
+
 	Monomial monomial2 =*this;
 	monomial2 *= monomial1;
 	return monomial2;
@@ -139,8 +135,10 @@ istream &operator>>(istream &in, Monomial &monom)
 {
 	double div = 0.1;
 	char c;
-	bool pow_flag = false, x_flag = false, num_flag = false, minus_flag = false;
+	bool pow_flag = false, x_flag = false, num_flag = false, minus_flag =false ; static bool  secondminus_Flag = false;
 	monom.coefficient = monom.degree = 0;
+	minus_flag = secondminus_Flag;
+	secondminus_Flag = false;
 	while ((c = in.get()) != '\n')
 	{
 		if (c == '.')
@@ -177,7 +175,13 @@ istream &operator>>(istream &in, Monomial &monom)
 		}
 		if (c == ',' || c == '+')
 			break;
-		if (c == '-' && !x_flag && !pow_flag && !num_flag)
+		if (c == '-'&& minus_flag == true)
+		{
+			secondminus_Flag = true;
+			break;
+		}
+			
+		if (c == '-' && !x_flag && !pow_flag && !num_flag&&!secondminus_Flag)
 			minus_flag = true;
 
 	}
@@ -185,8 +189,10 @@ istream &operator>>(istream &in, Monomial &monom)
 		monom.degree = 1;
 	if (!num_flag)
 		monom.setCoefficient(1);
-	if (minus_flag == true)
+	if (minus_flag == true) {
 		monom.setCoefficient(monom.getCoefficient()*-1);
+		minus_flag = false;
+	}
 	return in;
 }
 //istream & operator>>(istream &in, Monomial &monom)
@@ -253,7 +259,7 @@ istream &operator>>(istream &in, Monomial &monom)
 
 
 double Monomial::operator()(double r)const {
-	double power = r;
+	double power = 1;
 	for (int i = 0; i < this->degree; i++)
 	{
 		power *= r;

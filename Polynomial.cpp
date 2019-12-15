@@ -114,11 +114,11 @@ void Polynomial::remove(Node *prev)
 }
  Polynomial Polynomial::operator+(const Polynomial &polinom)const
 {
-	Polynomial p = *this;
+	 Polynomial p;
 	Node * tail = polinom.head;
 	while (tail != NULL)
 	{
-		p + *(tail->data);
+		p =p + *(tail->data);
 		tail = tail->next;
 	}
 	return p;
@@ -225,11 +225,11 @@ bool Polynomial::operator!=(const Monomial &monom) const // NEED TO CHECK
 double Polynomial::operator() (const double r)
 {
 	double sum = 0;
-	Monomial m;
 	Node * tail = this->head;
-	while (tail->next)
+	while (tail)
 	{ 
 		sum += (*tail->data)(r);
+		tail = tail->next;
 	}
 	return sum;
 }
@@ -243,8 +243,11 @@ ostream & operator<<(ostream &out, const Polynomial &polynom)
 istream & operator>>(istream &in, Polynomial & polynom)
 {
 	Monomial monom;
-	polynom;
-
+	while (polynom.head != NULL) //Empty the polynom in case it's an used one
+	{
+		polynom.head->data->setCoefficient(0);
+		polynom.remove(polynom.head);
+	}
 	while (true)
 	{
 		in >> monom;

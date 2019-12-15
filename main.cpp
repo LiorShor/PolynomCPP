@@ -51,7 +51,7 @@ void testPolynomial() {
 
 int main() {
 	cout << boolalpha;
-	testMonomial();
+	//testMonomial();
 	cout << "Number of Monomials=" << Monomial::getNumberOfMonomials() << endl;
 	testPolynomial();
 	cout << "Number of Monomials=" << Monomial::getNumberOfMonomials() << endl;
