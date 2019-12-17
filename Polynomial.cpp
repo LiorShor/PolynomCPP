@@ -298,7 +298,7 @@ Polynomial Polynomial::operator-(const Polynomial &polynom)const ///WORKS
 
 	while (tail != NULL)
 	{
-		p += *this - *(tail->data);
+		p = *this - *(tail->data);
 		tail = tail->next;
 	}
 
