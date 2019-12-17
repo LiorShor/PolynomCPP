@@ -29,10 +29,14 @@ void testPolynomial() {
 	cout << "Adding one to p" << endl;
 	p += Monomial(3,9);
 	cout << "p=" << p << endl;
-	p2 += Monomial(-2,4);
+	p2 += Monomial(3,9);
+	if (p != p2)
+		cout << "yay";
+	else
+		cout << "not";
 	cout << "p=" << -p << endl;
 	//p = p2;
-	cout << "MINUS=" << p - p2 << endl;
+	cout << "MINUS=" << p - m << endl;
 	cout << "Adding x^2 to p" << endl;
 	p -= Monomial(1, 2);
 	cout << "p=" << p << endl;
@@ -50,7 +54,7 @@ void testPolynomial() {
 		cin >> p;
 		cout << p << endl;
 		cout << "p(0)=" << p(0) << ", p(1)=" << p(1) << ", p(2)=" << p(2) << endl;
-//		cout << "p[0]=" << p[0] << ", p[1]=" << p[1] << ", p[2]=" << p[2] << ", p[4]=" << p[4] << endl;
+		cout << "p[0]=" << p[0] << ", p[1]=" << p[1] << ", p[2]=" << p[2] << ", p[4]=" << p[4] << endl;
 
 		cout << "p-p=" << p- p << endl;
 	} while (p != Monomial(0));

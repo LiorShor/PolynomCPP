@@ -188,7 +188,7 @@ bool Polynomial::operator!=(const Polynomial &polynom) const // NEED TO CHECK
 		if (*tail->data == *tail2->data)
 			return false;
 		tail = tail->next;
-		tail2 = tail->next;
+		tail2 = tail2->next;
 	}
 	return true;
 }
