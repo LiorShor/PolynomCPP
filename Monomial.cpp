@@ -133,65 +133,62 @@ ostream & operator<<(ostream & out, const Monomial &monom)
 }
 istream &operator>>(istream &in, Monomial &monom)
 {
+	bool isPow = false, isX = false, isNum = false, isFirstMinus;
+	static bool isSecMinus = false;
 	double div = 0.1;
-	char c;
-	bool pow_flag = false, x_flag = false, num_flag = false, minus_flag =false ; static bool  secondminus_Flag = false;
+	char ch;
+
+	isFirstMinus = isSecMinus;
+	isSecMinus = false;
 	monom.coefficient = monom.degree = 0;
-	minus_flag = secondminus_Flag;
-	secondminus_Flag = false;
-	while ((c = in.get()) != '\n')
+	while ((ch = in.get()) != '\n')
 	{
-		if (c == '.')
+		if (ch == '^')
+			isPow = true;
+		else if (ch == 'x')
+			isX = true;
+		else if (ch >= '0'&& ch <= '9')
 		{
-			c = in.get();
-			while (c >= '0'&&c <= '9')
+			if (!isPow)
 			{
-				monom.setCoefficient((monom.getCoefficient()) + ((c - '0')*div));
-				div *= 0.1;
-				c = in.get();
-			}
-			if (c == '\n')
-				break;
-		}
-		else if (c == '^')
-		{
-			pow_flag = true;
-		}
-		else if (c == 'x')
-		{
-			x_flag = true;
-		}
-		else if (c >= '0'&&c <= '9')
-		{
-			if (!pow_flag)
-			{
-				monom.setCoefficient((monom.getCoefficient() * 10) + (c - '0'));
-				num_flag = true;
+				monom.setCoefficient((monom.getCoefficient() * 10) + (ch - '0'));
+				isNum = true;
 			}
 			else
 			{
-				monom.setDegree((monom.getDegree() * 10) + (c - '0'));
+				monom.setDegree((monom.getDegree() * 10) + (ch - '0'));
 			}
 		}
-		if (c == ',' || c == '+')
-			break;
-		if (c == '-'&& minus_flag == true)
+		else if (ch == '.')
 		{
-			secondminus_Flag = true;
+			ch = in.get();
+			while (ch >= '0'&& ch <= '9')
+			{
+				monom.setCoefficient((monom.getCoefficient()) + ((ch - '0')*div));
+				div *= 0.1;
+				ch = in.get();
+			}
+			if (ch == '\n')
+				break;
+		}
+		if (ch == ',' || ch == '+')
+			break;
+			
+		if ((ch == '-') && (!isNum && !isX && !isPow))
+			isFirstMinus = true;
+		else if (ch == '-')
+		{
+			isSecMinus = true;
 			break;
 		}
-			
-		if (c == '-' && !x_flag && !pow_flag && !num_flag&&!secondminus_Flag)
-			minus_flag = true;
-
 	}
-	if (!pow_flag&&x_flag)
+	if (!isNum)
+		monom.coefficient= 1;
+	if (!isPow&&isX)
 		monom.degree = 1;
-	if (!num_flag)
-		monom.setCoefficient(1);
-	if (minus_flag == true) {
-		monom.setCoefficient(monom.getCoefficient()*-1);
-		minus_flag = false;
+	if (isFirstMinus == true) {
+		monom.setCoefficient(-monom.getCoefficient());
+		isFirstMinus = false;
 	}
 	return in;
 }

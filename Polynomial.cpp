@@ -106,19 +106,20 @@ void Polynomial::remove(Node *prev)
 
 
 
- Polynomial Polynomial::operator=(const Polynomial &polinom)
+ Polynomial Polynomial::operator=(const Polynomial &polynom)
 {
 	delete this;
-	this->head = polinom.head;
+	this->head = polynom.head;
 	return *this;
 }
- Polynomial Polynomial::operator+(const Polynomial &polinom)const
+ Polynomial Polynomial::operator+(const Polynomial &polynom)const
 {
-	 Polynomial p;
-	Node * tail = polinom.head;
+	 Polynomial p = polynom;
+	 p = polynom;
+	Node * tail = polynom.head;
 	while (tail != NULL)
 	{
-		p =p + *(tail->data);
+		p+=(*tail->data);
 		tail = tail->next;
 	}
 	return p;
@@ -157,7 +158,7 @@ void Polynomial::remove(Node *prev)
 	add(monom);
 	return *this;
 }
- Polynomial & Polynomial::operator+=(const Polynomial&polynom) {
+ Polynomial  Polynomial::operator+=(const Polynomial&polynom) {
 	Node * tail = polynom.head;
 	while (tail != NULL)
 	{
@@ -258,4 +259,18 @@ istream & operator>>(istream &in, Polynomial & polynom)
 	}
 	in.get();
 	return in;
+}
+
+double  Polynomial::operator[](const int &degree)
+{
+	Node * tail = this->head;
+	while (tail)
+	{
+		if (tail->data->getDegree() == degree)
+		{
+			return tail->data->getCoefficient();
+		}
+		tail = tail->next;
+	}
+	return 0;
 }
