@@ -155,9 +155,7 @@ istream &operator>>(istream &in, Monomial &monom)
 				isNum = true;
 			}
 			else
-			{
 				monom.setDegree((monom.getDegree() * 10) + (ch - '0'));
-			}
 		}
 		else if (ch == '.')
 		{
@@ -172,8 +170,7 @@ istream &operator>>(istream &in, Monomial &monom)
 				break;
 		}
 		if (ch == ',' || ch == '+')
-			break;
-			
+			break;	
 		if ((ch == '-') && (!isNum && !isX && !isPow))
 			isFirstMinus = true;
 		else if (ch == '-')
@@ -192,68 +189,6 @@ istream &operator>>(istream &in, Monomial &monom)
 	}
 	return in;
 }
-//istream & operator>>(istream &in, Monomial &monom)
-//{
-//	string input;
-//	char str[100];
-//	getline(cin, input); // read until , is found
-//	strcpy(str, input.c_str());
-//	bool isnegative = false ,xFlag = false ,degFlag = false;
-//	if((strstr(str, "-")) != NULL)
-//		isnegative = true;
-//	if ((strstr(str, "x")) != NULL)
-//		xFlag = true;
-//	if ((strstr(str, "^")) != NULL)
-//		degFlag = true;
-//	
-//
-//	char * token = strtok(str, " -x^,");
-//	if (xFlag == true && degFlag == true)//-24x^346
-//	{
-//		convertStringtoCoefficient(token, monom);
-//		char * token = strtok(NULL, " -x^,");
-//		convertStringtoDegree(token, monom);
-//	}
-//	else if (degFlag == false)  //2434x or x or -x
-//	{
-//		if(xFlag == true)
-//			monom.degree = 1;
-//		convertStringtoCoefficient(token, monom);
-//	}
-//	//23 546 etc.
-//	if (isnegative)
-//		monom.coefficient *= -1;;
-//	return in;
-//}
-//
-//
-//
-//
-//void convertStringtoCoefficient(char *&token, Monomial &monom)
-//{
-//	monom.coefficient = 0;
-//	if (token != NULL) {
-//		monom.coefficient = token[0] - '0';
-//		for (int i = 1; i < (int)strlen(token); i++)
-//		{
-//			monom.coefficient *= 10;
-//			monom.coefficient += token[i] - '0';
-//		}
-//	}
-//}
-//void convertStringtoDegree(char *&token, Monomial &monom)
-//{
-//	monom.degree = 0;
-//	if (token != NULL) {
-//		monom.degree = token[0] - '0';
-//		for (int i = 1; i < (int)strlen(token); i++)
-//		{
-//			monom.degree *= 10;
-//			monom.degree += token[i] - '0';
-//		}
-//	}
-//}
-
 
 double Monomial::operator()(double r)const {
 	double power = 1;

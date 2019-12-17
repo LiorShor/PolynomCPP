@@ -34,6 +34,7 @@ public:
 	 bool operator!=(const Polynomial &) const;
 	 bool operator!=(const Monomial &) const;
 	 bool operator==(const Polynomial &) const;
+	 bool operator==(const Monomial &) const;
 	Polynomial & operator-();
 	double  operator[](const int &degree);
 

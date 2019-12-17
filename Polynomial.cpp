@@ -156,7 +156,7 @@ Polynomial Polynomial::operator+=(const Polynomial&polynom) {
 	Node * tail = polynom.head;
 	while (tail != NULL)
 	{
-		*this - *(tail->data);
+		*this -= *(tail->data);
 		tail = tail->next;
 	}
 	return *this;
@@ -192,13 +192,20 @@ bool Polynomial::operator!=(const Polynomial &polynom) const // NEED TO CHECK
 	}
 	return true;
 }
-bool Polynomial::operator!=(const Monomial &monom) const // NEED TO CHECK
+bool Polynomial::operator==(const Monomial &monom) const // NEED TO CHECK
 {
-	Polynomial p;
-	p += monom;
-	if (*this == p)
+	if (*this->head->data == monom)
+	{
+		if (this->head->next == NULL)
 		return true;
+	}
 	return false;
+}
+bool Polynomial::operator!=(const Monomial &monom) const 
+{
+	if (*this == monom)
+		return false;
+	return true;
 }
 double Polynomial::operator() (const double r)
 {
@@ -260,7 +267,6 @@ Polynomial & Polynomial::operator=(const Polynomial &polynom) ///Looks like it w
 		this->head->data->setCoefficient(0);
 		this->remove(this->head);
 	}
-	//this->head = NULL;
 	*this += polynom;
 	return *this;
 }
@@ -288,7 +294,7 @@ Polynomial Polynomial::operator-(const Monomial &monom) const ///WORKS
 	Polynomial p = *this;
 	Monomial monom2 = monom;
 	monom2 = -monom2;
-	p.add(monom);
+	p.add(monom2);
 	return p;
 }
 Polynomial Polynomial::operator-(const Polynomial &polynom)const ///WORKS
