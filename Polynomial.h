@@ -15,12 +15,13 @@ private:
 	Node * head;
 public:
 	Polynomial();
+	Polynomial(const Polynomial &);
 	~Polynomial();
 	void add(const Monomial &);
 	void print() const;
 	void insertbefore(Node *, Node *);
 	void remove(Node *);
-	 Polynomial  operator=(const Polynomial &);
+	 Polynomial & operator=(const Polynomial &);
 	 Polynomial operator+(const Polynomial &)const ;
 	 Polynomial  operator+(const Monomial&)const;
 	 Polynomial  operator-(const Polynomial &)const;
@@ -33,7 +34,7 @@ public:
 	 bool operator!=(const Polynomial &) const;
 	 bool operator!=(const Monomial &) const;
 	 bool operator==(const Polynomial &) const;
-	Polynomial operator-();
+	Polynomial & operator-();
 	double  operator[](const int &degree);
 
 	friend ostream & operator<<(ostream &out, const Polynomial &c);
