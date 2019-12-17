@@ -262,12 +262,13 @@ double  Polynomial::operator[](const int &degree) // NEED TO CHECK
 
 Polynomial & Polynomial::operator=(const Polynomial &polynom) ///Looks like it works
 {
+	Polynomial p = polynom;
 	while (this->head!=NULL)
 	{
 		this->head->data->setCoefficient(0);
 		this->remove(this->head);
 	}
-	*this += polynom;
+	*this += p;
 	return *this;
 }
 

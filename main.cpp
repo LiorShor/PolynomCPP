@@ -28,6 +28,8 @@ void testPolynomial() {
 	cout << "p=" << p << endl;
 	cout << "Adding one to p" << endl;
 	p += Monomial(3,9);
+	p = -p;
+	cout << "p=" << p << endl;
 	p2 += Monomial(3, 9);
 	p -= p2;
 	if(p != m)
