@@ -163,7 +163,7 @@ istream &operator>>(istream &in, Monomial &monom)
 				div *= 0.1;
 				ch = in.get();
 			}
-			if (ch == '0\n')
+			if (ch == '\n')
 				break;
 		}
 		if (ch == ',' || ch == '+')

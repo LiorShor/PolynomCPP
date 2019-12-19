@@ -44,12 +44,11 @@ void testPolynomial() {
 	else
 		cout << "not";
 	cout << "p=" << -p << endl;
-	//p = p2;
 	cout << "MINUS=" << p  << endl;
 	cout << "Adding x^2 to p" << endl;
 	p -= Monomial(1, 2);
 	cout << "p=" << p << endl;
-	//p2 = p;
+	
 
 
 

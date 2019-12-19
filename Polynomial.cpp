@@ -191,13 +191,10 @@ bool Polynomial::operator!=(const Polynomial &polynom) const
 }
 bool Polynomial::operator==(const Monomial &monom) const
 {
-	if (*this != NULL)
+	if (*this->head->data == monom)
 	{
-		if (*this->head->data == monom)
-		{
-			if (this->head->next == NULL)
-				return true;
-		}
+		if (this->head->next == NULL)
+			return true;
 	}
 	return false;
 }
