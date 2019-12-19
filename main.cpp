@@ -24,31 +24,12 @@ void testMonomial() {
 }
 
 void testPolynomial() {
-	Polynomial p,p2;
-	Monomial m(3, 9);
-	cout << "p=" << p << endl;
-	cout << "Adding one to p" << endl;
-	p += Monomial(3,9);
-	p = -p;
-	cout << "p=" << p << endl;
-	p2 += Monomial(3, 9);
-	p -= p2;
-	if(p != m)
-		cout << "yay";
-	else
-		cout << "not";
-	cout << "p=" << p << endl;
-	p2 += Monomial(3,9);
-	if (p != p2)
-		cout << "yay";
-	else
-		cout << "not";
-	cout << "p=" << -p << endl;
-	cout << "MINUS=" << p  << endl;
-	cout << "Adding x^2 to p" << endl;
-	p -= Monomial(1, 2);
-	cout << "p=" << p << endl;
-	
+	Polynomial p,p2,p1,p3;
+	Monomial m1(-4.19, 5);
+	Monomial m2(-3, 5);
+	Monomial m3(2, 5);
+	Monomial m4(4, 1);
+	Monomial m5(-4, 1);
 
 
 

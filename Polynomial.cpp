@@ -6,7 +6,7 @@ Polynomial::Polynomial()
 {
 	head = NULL;
 }
-Polynomial::Polynomial(const Polynomial &polynom)  ///WORKS!!!@$@!#$
+Polynomial::Polynomial(const Polynomial &polynom) 
 {
 	if (polynom.head == NULL)
 		this->head = NULL;
@@ -141,7 +141,7 @@ Polynomial Polynomial::operator+=(const Polynomial&polynom) {
 	}
 	return *this;
 }
- Polynomial Polynomial::operator-=(const Monomial&monom) ///WORKS
+ Polynomial Polynomial::operator-=(const Monomial&monom)
 {
 	Monomial monom2 = monom;
 	monom2 = -monom2;
@@ -158,15 +158,16 @@ Polynomial Polynomial::operator+=(const Polynomial&polynom) {
 	}
 	return *this;
 }
-Polynomial Polynomial::operator-()
+Polynomial Polynomial::operator-()const
 {
-	Node * tail = this->head;
+	Polynomial p(*this);
+	Node * tail = p.head;
 	while (tail != NULL)
 	{
 		*tail->data = -*tail->data;
 		tail = tail->next;
 	}
-	return *this;
+	return p;
 }
 bool Polynomial::operator==(const Polynomial &polynom) const 
 {
@@ -191,11 +192,15 @@ bool Polynomial::operator!=(const Polynomial &polynom) const
 }
 bool Polynomial::operator==(const Monomial &monom) const
 {
-	if (*this->head->data == monom)
+	if (this->head != NULL)
 	{
-		if (this->head->next == NULL)
-			return true;
+		if (*this->head->data == monom)
+		{
+			if (this->head->next == NULL)
+				return true;
+		}
 	}
+	
 	return false;
 }
 bool Polynomial::operator!=(const Monomial &monom) const 

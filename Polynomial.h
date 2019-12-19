@@ -30,13 +30,12 @@ public:
 	Polynomial operator-=(const Polynomial&);
 	Polynomial operator+=(const Monomial&);
 	Polynomial operator+=(const Polynomial&);
-	Polynomial operator-();
+	Polynomial operator-() const;
 	double operator() (const double) const;
 	bool operator!=(const Polynomial &) const;
 	bool operator!=(const Monomial &) const;
 	bool operator==(const Polynomial &) const;
 	bool operator==(const Monomial &) const;
-	
 	double & operator[](const int &);
 	friend ostream & operator<<(ostream &out, const Polynomial &c);
 	friend istream & operator>>(istream &in, Polynomial &monom);

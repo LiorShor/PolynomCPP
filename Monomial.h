@@ -24,7 +24,7 @@ public:
 	Monomial operator+=(const Monomial &);
 	Monomial operator-=(const Monomial &);
 	Monomial operator*=(const Monomial &);
-	Monomial operator-();
+	Monomial operator-() const ;
 	bool operator==(const Monomial &monomial)const;
 	bool operator!=(const Monomial &monomial) const;
 	friend ostream & operator<<(ostream &out, const Monomial &c);
