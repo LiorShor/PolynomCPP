@@ -61,7 +61,7 @@ bool Monomial::degCheck(const Monomial &monomial)const
 		return true;
 	return false;
 }
-Monomial Monomial::operator=(const Monomial &monomial)
+const Monomial & Monomial::operator=(const Monomial &monomial)
 {
 	this->degree = monomial.getDegree();
 	this->coefficient = monomial.coefficient;

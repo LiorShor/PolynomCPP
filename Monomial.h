@@ -16,8 +16,8 @@ public:
 	void print() const;
 	static int getNumberOfMonomials();
 	bool degCheck(const Monomial &)const;
-	Monomial operator=(const Monomial &);
 	Monomial add(const Monomial &);
+	const Monomial & operator=(const Monomial &);
 	const Monomial & operator+(const Monomial &)const;
 	const Monomial & operator-(const Monomial &)const;
 	const Monomial & operator*(const Monomial &)const;
