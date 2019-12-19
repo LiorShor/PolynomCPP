@@ -9,28 +9,27 @@ public:
 	Monomial(const Monomial &other);
 	~Monomial();
 	double getCoefficient()  const;
+	double & getCoefficient() {return coefficient;}
 	int getDegree() const;
-	void setCoefficient(const double);
 	void setDegree(const int);
+	void setCoefficient(const double);
 	void print() const;
 	static int getNumberOfMonomials();
 	bool degCheck(const Monomial &)const;
 	Monomial operator=(const Monomial &);
 	Monomial add(const Monomial &);
-	Monomial operator+(const Monomial &)const;
-	Monomial operator-(const Monomial &)const;
-	Monomial operator*(const Monomial &)const;
+	const Monomial & operator+(const Monomial &)const;
+	const Monomial & operator-(const Monomial &)const;
+	const Monomial & operator*(const Monomial &)const;
 	Monomial operator+=(const Monomial &);
 	Monomial operator-=(const Monomial &);
-	const Monomial& operator*=(const Monomial &);
+	Monomial operator*=(const Monomial &);
 	Monomial operator-();
 	bool operator==(const Monomial &monomial)const;
 	bool operator!=(const Monomial &monomial) const;
 	friend ostream & operator<<(ostream &out, const Monomial &c);
 	friend istream & operator>>(istream &in,  Monomial &monom);
 	double operator()(double r) const;
-	friend void convertStringtoCoefficient(char *&, Monomial &monom);
-	friend void convertStringtoDegree(char *&, Monomial &monom);
 	
 private:
 	double coefficient;

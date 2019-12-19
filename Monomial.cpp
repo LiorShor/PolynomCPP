@@ -67,28 +67,27 @@ Monomial Monomial::operator=(const Monomial &monomial)
 	this->coefficient = monomial.coefficient;
 	return *this;
 }
-Monomial Monomial::operator+(const Monomial &monomial)const
+const Monomial & Monomial::operator+(const Monomial &monomial)const
 {
 	if (degCheck(monomial))
 		return Monomial(this->coefficient + monomial.coefficient, this->degree);
 	return *this;
 }
-Monomial Monomial::operator-(const Monomial &monomial1)const
+const Monomial &  Monomial::operator-(const Monomial &monomial1)const
 {
-	Monomial monomial2;
+	Monomial * monomial2 = new Monomial();
 	if (degCheck(monomial1)) {
-		monomial2 = *this;
-		monomial2 -= monomial1;
-		return monomial2;
+		*monomial2 = *this;
+		*monomial2 -= monomial1;
+		return *monomial2;
 	}
 	return *this;
 }
-Monomial Monomial::operator*(const Monomial &monomial1)const
+const Monomial &  Monomial::operator*(const Monomial &monomial1)const
 {
-
-	Monomial monomial2 =*this;
-	monomial2 *= monomial1;
-	return monomial2;
+	Monomial * monomial2 =new Monomial(*this);
+	*monomial2 *= monomial1;
+	return *monomial2;
 }
 Monomial Monomial::operator+=(const Monomial &monomial)
 {
@@ -102,7 +101,7 @@ Monomial Monomial::operator-=(const Monomial &monomial)
 		this->coefficient -= monomial.coefficient;
 	return *this;
 }
-const Monomial & Monomial::operator*=(const Monomial &monomial)
+ Monomial Monomial::operator*=(const Monomial &monomial)
 {
 	this->degree += monomial.degree;
 	this->coefficient *= monomial.coefficient;
@@ -125,7 +124,6 @@ bool Monomial::operator!=(const Monomial &monomial) const
 		return false;
 	return true;
 }
-
 ostream & operator<<(ostream & out, const Monomial &monom)
 {
 	monom.print();
@@ -147,23 +145,18 @@ istream &operator>>(istream &in, Monomial &monom)
 			isPow = true;
 		else if (ch == 'x')
 			isX = true;
-		else if (ch >= '0'&& ch <= '9')
-		{
+		else if (ch >= '0'&& ch <= '9'){
 			if (!isPow)
 			{
 				monom.setCoefficient((monom.getCoefficient() * 10) + (ch - '0'));
 				isNum = true;
 			}
 			else
-			{
 				monom.setDegree((monom.getDegree() * 10) + (ch - '0'));
-			}
 		}
-		else if (ch == '.')
-		{
+		else if (ch == '.'){
 			ch = in.get();
-			while (ch >= '0'&& ch <= '9')
-			{
+			while (ch >= '0'&& ch <= '9'){
 				monom.setCoefficient((monom.getCoefficient()) + ((ch - '0')*div));
 				div *= 0.1;
 				ch = in.get();
@@ -172,8 +165,7 @@ istream &operator>>(istream &in, Monomial &monom)
 				break;
 		}
 		if (ch == ',' || ch == '+')
-			break;
-			
+			break;	
 		if ((ch == '-') && (!isNum && !isX && !isPow))
 			isFirstMinus = true;
 		else if (ch == '-')
@@ -192,68 +184,6 @@ istream &operator>>(istream &in, Monomial &monom)
 	}
 	return in;
 }
-//istream & operator>>(istream &in, Monomial &monom)
-//{
-//	string input;
-//	char str[100];
-//	getline(cin, input); // read until , is found
-//	strcpy(str, input.c_str());
-//	bool isnegative = false ,xFlag = false ,degFlag = false;
-//	if((strstr(str, "-")) != NULL)
-//		isnegative = true;
-//	if ((strstr(str, "x")) != NULL)
-//		xFlag = true;
-//	if ((strstr(str, "^")) != NULL)
-//		degFlag = true;
-//	
-//
-//	char * token = strtok(str, " -x^,");
-//	if (xFlag == true && degFlag == true)//-24x^346
-//	{
-//		convertStringtoCoefficient(token, monom);
-//		char * token = strtok(NULL, " -x^,");
-//		convertStringtoDegree(token, monom);
-//	}
-//	else if (degFlag == false)  //2434x or x or -x
-//	{
-//		if(xFlag == true)
-//			monom.degree = 1;
-//		convertStringtoCoefficient(token, monom);
-//	}
-//	//23 546 etc.
-//	if (isnegative)
-//		monom.coefficient *= -1;;
-//	return in;
-//}
-//
-//
-//
-//
-//void convertStringtoCoefficient(char *&token, Monomial &monom)
-//{
-//	monom.coefficient = 0;
-//	if (token != NULL) {
-//		monom.coefficient = token[0] - '0';
-//		for (int i = 1; i < (int)strlen(token); i++)
-//		{
-//			monom.coefficient *= 10;
-//			monom.coefficient += token[i] - '0';
-//		}
-//	}
-//}
-//void convertStringtoDegree(char *&token, Monomial &monom)
-//{
-//	monom.degree = 0;
-//	if (token != NULL) {
-//		monom.degree = token[0] - '0';
-//		for (int i = 1; i < (int)strlen(token); i++)
-//		{
-//			monom.degree *= 10;
-//			monom.degree += token[i] - '0';
-//		}
-//	}
-//}
-
 
 double Monomial::operator()(double r)const {
 	double power = 1;
