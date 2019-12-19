@@ -18,12 +18,12 @@ public:
 	bool degCheck(const Monomial &)const;
 	Monomial add(const Monomial &);
 	const Monomial & operator=(const Monomial &);
-	const Monomial & operator+(const Monomial &)const;
-	const Monomial & operator-(const Monomial &)const;
-	const Monomial & operator*(const Monomial &)const;
-	Monomial operator+=(const Monomial &);
-	Monomial operator-=(const Monomial &);
-	Monomial operator*=(const Monomial &);
+	Monomial operator+(const Monomial &)const;
+	Monomial operator-(const Monomial &)const;
+	Monomial operator*(const Monomial &)const;
+	const Monomial & operator+=(const Monomial &);
+	const Monomial & operator-=(const Monomial &);
+	const Monomial & operator*=(const Monomial &);
 	Monomial operator-() const ;
 	bool operator==(const Monomial &monomial)const;
 	bool operator!=(const Monomial &monomial) const;

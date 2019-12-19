@@ -71,46 +71,43 @@ const Monomial & Monomial::operator=(const Monomial &monomial)
 	this->coefficient = monomial.coefficient;
 	return *this;
 }
-const Monomial & Monomial::operator+(const Monomial &monomial1)const
+Monomial Monomial::operator+(const Monomial &monomial1)const
 {
-	Monomial * monomial2 = new Monomial();
 	if (degCheck(monomial1))
 	{
-		monomial2->coefficient = this->coefficient + monomial1.coefficient;
-		monomial2->degree = this->degree;
-		return *monomial2;
+		return Monomial(this->coefficient + monomial1.coefficient, this->degree);
 	}
 	return *this;
 }
-const Monomial & Monomial::operator-(const Monomial &monomial1)const
+Monomial Monomial::operator-(const Monomial & monomial1)const
 {
-	Monomial * monomial2 = new Monomial();
+	Monomial monomial2;
 	if (degCheck(monomial1)) {
-		*monomial2 = *this;
-		*monomial2 -= monomial1;
-		return *monomial2;
+		monomial2 = *this;
+		monomial2 -= monomial1;
+		return monomial2;
 	}
 	return *this;
 }
-const Monomial & Monomial::operator*(const Monomial &monomial1)const
+Monomial Monomial::operator*(const Monomial &monomial1)const
 {
-	Monomial * monomial2 =new Monomial(*this);
-	*monomial2 *= monomial1;
-	return *monomial2;
+	Monomial monomial2(*this);
+	monomial2 *= monomial1;
+	return monomial2;
 }
-Monomial Monomial::operator+=(const Monomial &monomial)
+const Monomial & Monomial::operator+=(const Monomial &monomial)
 {
 	if (degCheck(monomial))
 		this->coefficient += monomial.coefficient;
 	return *this;
 }
-Monomial Monomial::operator-=(const Monomial &monomial)
+const Monomial & Monomial::operator-=(const Monomial &monomial)
 {
 	if (degCheck(monomial))
 		this->coefficient -= monomial.coefficient;
 	return *this;
 }
- Monomial Monomial::operator*=(const Monomial &monomial)
+const Monomial & Monomial::operator*=(const Monomial &monomial)
 {
 	this->degree += monomial.degree;
 	this->coefficient *= monomial.coefficient;

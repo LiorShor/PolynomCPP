@@ -31,55 +31,54 @@ Polynomial::Polynomial(const Polynomial &polynom)
 		}
 	}
 }
-Polynomial::~Polynomial() 
-{ // Delete list
-	Node * nodeToDelete = NULL;
-	if (head != NULL)
-	{
-		while (head != NULL)
-		{
-			nodeToDelete = head;
-			head = head->next;
-			delete(nodeToDelete);
-		}
+Polynomial::~Polynomial() {
+	Node *p = head;
+	while (p) {
+		Node *q = p;
+		p = p->next;
+		delete q->data;
+		delete q;
 	}
-	delete(head);
 }
 
-void Polynomial::add(const Monomial & mon)
-{ // Enqueue to list
-	Node * tail, * prev = NULL;
-	Node * newnode = new Node;
-	newnode->next = NULL;
-	newnode->data = new Monomial(mon);
-	if (head == NULL)
-		head = newnode;
-	else
-	{
-		prev = tail = head;
-		while (tail != NULL)
-		{
-			if (tail->data->getDegree() < mon.getDegree())
-			{
-				insertbefore(newnode, prev);
-				return;
-			}
-			else
-			if (tail->data->getDegree() == mon.getDegree())
-			{
-				tail->data->add(mon);
-				if (tail->data->getCoefficient() == 0)
-						remove(prev);
-					delete newnode->data;
-					delete newnode;
+Polynomial::Node* Polynomial::findGreaterOrEqual(int degree, Polynomial::Node*& prev) const {
+	Node *ret = prev = NULL;
+	Node *p = head;
+	while (p && p->data->getDegree() >= degree) {
+		prev = ret;
+		ret = p;
+		p = p->next;
+	}
+	return ret;
+}
 
-				return;
+void Polynomial::add(const Monomial &monom) {
+	Node *prev;
+	Node *p = findGreaterOrEqual(monom.getDegree(), prev);
+	if (p && p->data->getDegree() == monom.getDegree()) {
+		p->data->add(monom);
+		if (p->data->getCoefficient() == 0) { // The monomial vanished, remove it from list
+			delete p->data;
+			if (prev) {
+				prev->next = p->next;
 			}
-			prev = tail;
-			tail = tail->next;
+			else {
+				head = p->next;
+			}
+			delete p;
 		}
-		delete tail;
-		prev->next = newnode;
+	}
+	else {
+		Node *newNode = new Node;
+		newNode->data = new Monomial(monom);
+		if (p) {
+			newNode->next = p->next;
+			p->next = newNode;
+		}
+		else {
+			newNode->next = head;
+			head = newNode;
+		}
 	}
 }
 void Polynomial::print() const
@@ -99,18 +98,6 @@ void Polynomial::print() const
 	else
 		cout << 0 ;
 } 
-void Polynomial::insertbefore(Node * newnode,Node *prev)
-{
-	if(head->data->getDegree() < newnode->data->getDegree())  
-	{// Insert to head
-		newnode->next = head;
-		head = newnode;
-	}
-	else{
-		newnode->next = prev->next;
-		prev->next = newnode;
-	}
-}
 void Polynomial::remove(Node *prev)
 {// Remove node
 	Node * temp = NULL;
@@ -128,11 +115,11 @@ void Polynomial::remove(Node *prev)
 	delete(temp);
 }
 
-Polynomial Polynomial::operator+=(const Monomial&monom) {
+const Polynomial & Polynomial::operator+=(const Monomial&monom) {
 	add(monom);
 	return *this;
 }
-Polynomial Polynomial::operator+=(const Polynomial&polynom) {
+const Polynomial & Polynomial::operator+=(const Polynomial&polynom) {
 	Node * tail = polynom.head;
 	while (tail != NULL)
 	{
@@ -141,14 +128,14 @@ Polynomial Polynomial::operator+=(const Polynomial&polynom) {
 	}
 	return *this;
 }
- Polynomial Polynomial::operator-=(const Monomial&monom)
+const Polynomial & Polynomial::operator-=(const Monomial&monom)
 {
 	Monomial monom2 = monom;
 	monom2 = -monom2;
 	add(monom2);
 	return *this;
 }
- Polynomial Polynomial::operator-=(const Polynomial&polynom) 
+ const Polynomial & Polynomial::operator-=(const Polynomial&polynom)
 {
 	Node * tail = polynom.head;
 	while (tail != NULL)
@@ -273,41 +260,41 @@ const Polynomial & Polynomial::operator=(const Polynomial &polynom)
 	return *this;
 }
 
-const Polynomial & Polynomial::operator+(const Polynomial &polynom)const
+ Polynomial  Polynomial::operator+(const Polynomial &polynom)const
 {
-	Polynomial * p = new Polynomial(*this);
+	Polynomial  p(*this);
 	Node * tail = polynom.head;
 	while (tail != NULL)
 	{
-		*p += (*tail->data);
+		p += (*tail->data);
 		tail = tail->next;
 	}
-	return *p;
+	return p;
 }
-const Polynomial & Polynomial::operator+(const Monomial& monom)const
+ Polynomial Polynomial::operator+(const Monomial& monom)const
 {
-	Polynomial * p = new Polynomial(*this);
-	p->add(monom);
-	return *p;
+	Polynomial p(*this);
+	p.add(monom);
+	return p;
 }
 
-const Polynomial & Polynomial::operator-(const Monomial &monom) const
+ Polynomial Polynomial::operator-(const Monomial &monom) const
 {
-	Polynomial * p = new Polynomial(*this);
+	Polynomial  p (*this);
 	Monomial monom2 = monom;
 	monom2 = -monom2;
-	p->add(monom2);
-	return *p;
+	p.add(monom2);
+	return p;
 }
-const Polynomial & Polynomial::operator-(const Polynomial &polynom)const 
+Polynomial Polynomial::operator-(const Polynomial &polynom)const 
 {
-	Polynomial * p = new Polynomial (*this);
+	Polynomial p(*this);
 	Node * tail = polynom.head;
 	while (tail != NULL)
 	{
-		*p = *this - *(tail->data);
+		p = *this - *(tail->data);
 		tail = tail->next;
 	}
-	return *p;
+	return p;
 }
 

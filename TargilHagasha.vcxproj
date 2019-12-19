@@ -18,6 +18,15 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Monomial.cpp" />
+    <ClCompile Include="Polynomial.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Monomial.h" />
+    <ClInclude Include="Polynomial.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7563D336-B724-4A9C-B6F7-2C3A9AF9C65F}</ProjectGuid>
     <RootNamespace>TargilHagasha</RootNamespace>
@@ -109,15 +118,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="Monomial.h" />
-    <ClInclude Include="Polynomial.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Monomial.cpp" />
-    <ClCompile Include="Polynomial.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
