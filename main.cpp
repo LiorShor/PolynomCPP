@@ -64,7 +64,7 @@ void testPolynomial() {
 		cout << p << endl;
 		cout << "p(0)=" << p(0) << ", p(1)=" << p(1) << ", p(2)=" << p(2) << endl;
 		cout << "p[0]=" << p[0] << ", p[1]=" << p[1] << ", p[2]=" << p[2] << ", p[4]=" << p[4] << endl;
-		//p[1] = 8;
+		p[1] = 8;
 		cout << "p-p=" << p- p << endl;
 	} while (p != Monomial(0));
 }

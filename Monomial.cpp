@@ -63,17 +63,22 @@ bool Monomial::degCheck(const Monomial &monomial)const
 }
 const Monomial & Monomial::operator=(const Monomial &monomial)
 {
-	this->degree = monomial.getDegree();
+	this->degree = monomial.degree;
 	this->coefficient = monomial.coefficient;
 	return *this;
 }
-const Monomial & Monomial::operator+(const Monomial &monomial)const
+const Monomial & Monomial::operator+(const Monomial &monomial1)const
 {
-	if (degCheck(monomial))
-		return Monomial(this->coefficient + monomial.coefficient, this->degree);
+	Monomial * monomial2 = new Monomial();
+	if (degCheck(monomial1))
+	{
+		monomial2->coefficient = this->coefficient + monomial1.coefficient;
+		monomial2->degree = this->degree;
+		return *monomial2;
+	}
 	return *this;
 }
-const Monomial &  Monomial::operator-(const Monomial &monomial1)const
+const Monomial & Monomial::operator-(const Monomial &monomial1)const
 {
 	Monomial * monomial2 = new Monomial();
 	if (degCheck(monomial1)) {
@@ -83,7 +88,7 @@ const Monomial &  Monomial::operator-(const Monomial &monomial1)const
 	}
 	return *this;
 }
-const Monomial &  Monomial::operator*(const Monomial &monomial1)const
+const Monomial & Monomial::operator*(const Monomial &monomial1)const
 {
 	Monomial * monomial2 =new Monomial(*this);
 	*monomial2 *= monomial1;
@@ -131,11 +136,10 @@ ostream & operator<<(ostream & out, const Monomial &monom)
 }
 istream &operator>>(istream &in, Monomial &monom)
 {
-	bool isPow = false, isX = false, isNum = false, isFirstMinus;
+	bool isPow = false, isNum = false, isFirstMinus;
 	static bool isSecMinus = false;
 	double div = 0.1;
 	char ch;
-
 	isFirstMinus = isSecMinus;
 	isSecMinus = false;
 	monom.coefficient = monom.degree = 0;
@@ -143,30 +147,28 @@ istream &operator>>(istream &in, Monomial &monom)
 	{
 		if (ch == '^')
 			isPow = true;
-		else if (ch == 'x')
-			isX = true;
 		else if (ch >= '0'&& ch <= '9'){
 			if (!isPow)
 			{
-				monom.setCoefficient((monom.getCoefficient() * 10) + (ch - '0'));
+				monom.setCoefficient((monom.coefficient * 10) + (ch - '0'));
 				isNum = true;
 			}
 			else
-				monom.setDegree((monom.getDegree() * 10) + (ch - '0'));
+				monom.setDegree((monom.degree * 10) + (ch - '0'));
 		}
-		else if (ch == '.'){
+		else if (ch == '.') {
 			ch = in.get();
-			while (ch >= '0'&& ch <= '9'){
-				monom.setCoefficient((monom.getCoefficient()) + ((ch - '0')*div));
+			while (ch >= '0' && ch <= '9'){
+				monom.setCoefficient(monom.coefficient + ((ch - '0')*div));
 				div *= 0.1;
 				ch = in.get();
 			}
-			if (ch == '\n')
+			if (ch == '0\n')
 				break;
 		}
 		if (ch == ',' || ch == '+')
 			break;	
-		if ((ch == '-') && (!isNum && !isX && !isPow))
+		if ((ch == '-') && (!isNum && !isPow))
 			isFirstMinus = true;
 		else if (ch == '-')
 		{
@@ -176,16 +178,14 @@ istream &operator>>(istream &in, Monomial &monom)
 	}
 	if (!isNum)
 		monom.coefficient= 1;
-	if (!isPow&&isX)
+	if (!isPow)
 		monom.degree = 1;
-	if (isFirstMinus == true) {
-		monom.setCoefficient(-monom.getCoefficient());
-		isFirstMinus = false;
-	}
+	if (isFirstMinus == true)
+		monom.coefficient= -monom.coefficient;
 	return in;
 }
 
-double Monomial::operator()(double r)const {
+double Monomial::operator()(double r) const {
 	double power = 1;
 	for (int i = 0; i < this->degree; i++)
 	{
